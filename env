@@ -1,0 +1,5 @@
+DEBUG= указать True/False
+SECRET_KEY= строка
+DOMAIN_NAME= полное url адрес без слэша в конце
+REDIS_HOST=
+REDIS_PORT=

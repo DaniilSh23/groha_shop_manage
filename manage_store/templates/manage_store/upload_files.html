@@ -1,0 +1,22 @@
+{% extends 'manage_store/base.html' %}
+
+{% block 'title' %}
+    <title>Загрузка файлов</title>
+{% endblock %}
+
+{% block 'body' %}
+    <h1>📑 Загрузка файлов для товаров</h1>
+    <hr>
+    <form action="{% url 'manage_store:add_category' %}" method="post">
+        {% csrf_token %}
+        {{ category_form.as_table }}
+        <button type="submit">➕ Добавить папку</button>
+    </form>
+    <hr>
+    <form action="{% url 'manage_store:upload' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p><strong>{{ file_form.category.label }}:</strong> {{ file_form.category }}</p>
+        <p><strong>{{ file_form.files.label }}:</strong> {{ file_form.files }}</p>
+        <button type="submit">📤 Загрузить файлы</button>
+    </form>
+{% endblock %}

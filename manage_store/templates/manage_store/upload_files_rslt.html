@@ -1,0 +1,10 @@
+{% extends 'manage_store/base.html' %}
+
+{% block 'title' %}
+    <title>Результат загрузки файлов</title>
+{% endblock %}
+
+{% block 'body' %}
+    <h1>👌Всё окей. Файлы загружены</h1>
+    <p>📥<strong>Скачать файл со списком ссылок <a href="{{ links_file.download_link }}">можно здесь</a>.</strong></p>
+{% endblock %}

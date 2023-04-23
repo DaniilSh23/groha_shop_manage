@@ -1,0 +1,22 @@
+{% extends 'manage_store/base.html' %}
+
+{% block 'title' %}
+    <title>Логин</title>
+{% endblock %}
+
+{% block 'body' %}
+    <h1>🛂 Аутентификация юзера:</h1>
+    <hr>
+    <form action="{% url 'manage_store:login' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if error %}
+            <p style="color: red">{{ error }}</p>
+        {% endif %}
+
+        {{ form.errors }}
+        {{ form.as_p }}
+        <button type="submit">🚪 Войти</button>
+    </form>
+    <hr>
+{% endblock %}
