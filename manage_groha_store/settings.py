@@ -161,6 +161,6 @@ CELERY_BEAT_SCHEDULE = {
     # Удаление устаревших файлов
     'deleting_obsolete_files': {
         'task': 'manage_store.tasks.deleting_obsolete_files',
-        'schedule': 10    # Время в секундах между запусками задач(60 * 60 * 12 = 12 часов)
+        'schedule': env('DELETE_OBSOLETE_FILES_TIME')   # Время, через которое будет происходить запуск задачи(сек.)
     }
 }

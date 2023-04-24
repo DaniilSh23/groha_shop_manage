@@ -3,3 +3,4 @@ SECRET_KEY= строка
 DOMAIN_NAME= полное url адрес без слэша в конце
 REDIS_HOST=
 REDIS_PORT=
+DELETE_OBSOLETE_FILES_TIME=
