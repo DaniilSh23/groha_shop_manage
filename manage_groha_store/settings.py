@@ -164,3 +164,7 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': env('DELETE_OBSOLETE_FILES_TIME')   # Время, через которое будет происходить запуск задачи(сек.)
     }
 }
+
+# Настройки размера загружаемых файлов
+DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600  # 100 MB
+DATA_UPLOAD_MAX_FILE_SIZE = 104857600  # 100 MB

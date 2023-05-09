@@ -3,4 +3,4 @@ SECRET_KEY= строка
 DOMAIN_NAME= полное url адрес без слэша в конце
 REDIS_HOST=
 REDIS_PORT=
-DELETE_OBSOLETE_FILES_TIME=
+DELETE_OBSOLETE_FILES_TIME=время в секундах, через которое будет запускаться задача по расписанию
