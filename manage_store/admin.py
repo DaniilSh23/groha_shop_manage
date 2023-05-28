@@ -44,11 +44,11 @@ def download_and_delete_files(modeladmin: admin.ModelAdmin, request: HttpRequest
 
     # Достаём из БД ключ настройки admin_time_to_del
     try:
-        time_to_del = float(ProjectSettings.objects.get(key='admin_time_to_del').value)
+        time_to_del = float(ProjectSettings.objects.get(key='admin_time_to_del').value) * 60
     except ObjectDoesNotExist as err:
         MY_LOGGER.debug(f'Ключ admin_time_to_del не установлен в настройках проекта. Используем значение 120 мин.\n'
                         f'Текст исключения: {err}')
-        time_to_del = 120
+        time_to_del = 120 * 60
 
     # Создаём буфер для хранения ZIP архива
     zip_buffer = io.BytesIO()
@@ -150,11 +150,11 @@ def download_and_delete_category_files(modeladmin: admin.ModelAdmin, request: Ht
 
     # Достаём из БД ключ настройки admin_time_to_del
     try:
-        time_to_del = float(ProjectSettings.objects.get(key='admin_time_to_del').value)
+        time_to_del = float(ProjectSettings.objects.get(key='admin_time_to_del').value) * 60
     except ObjectDoesNotExist as err:
         MY_LOGGER.debug(f'Ключ admin_time_to_del не установлен в настройках проекта. Используем значение 120 мин.\n'
                         f'Текст исключения: {err}')
-        time_to_del = 120
+        time_to_del = 120 * 60
 
     # Создаём буфер для хранения ZIP архива
     zip_buffer = io.BytesIO()
