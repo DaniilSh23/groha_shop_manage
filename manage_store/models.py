@@ -58,7 +58,7 @@ class ProductFiles(models.Model):
 
     def save(self, *args, **kwargs):
         """
-        Переопределяем метод save() для заполнени полей file_hash и download_link, если они пустые.
+        Переопределяем метод save() для заполнения полей file_hash и download_link, если они пустые.
         """
         if not self.file_hash:  # Если хэш не указан
             base_string = f'{self.origin_file_name}:{time.time()}:{random.choices(string.ascii_letters, k=8)}'

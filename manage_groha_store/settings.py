@@ -9,11 +9,12 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import sys
 from pathlib import Path
 import environ
 import os
 
+import loguru
 from django.urls import reverse_lazy
 
 # Это отсюда https://django-environ.readthedocs.io/en/latest/quickstart.html
@@ -161,10 +162,24 @@ CELERY_BEAT_SCHEDULE = {
     # Удаление устаревших файлов
     'deleting_obsolete_files': {
         'task': 'manage_store.tasks.deleting_obsolete_files',
-        'schedule': env('DELETE_OBSOLETE_FILES_TIME')   # Время, через которое будет происходить запуск задачи(сек.)
+        'schedule': int(env('DELETE_OBSOLETE_FILES_TIME'))   # Время, через которое будет происходить запуск задачи(сек)
     }
 }
 
 # Настройки размера загружаемых файлов
 DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600  # 100 MB
 DATA_UPLOAD_MAX_FILE_SIZE = 104857600  # 100 MB
+
+# Настройки логгера
+MY_LOGGER = loguru.logger
+MY_LOGGER.remove()  # Удаляем все предыдущие обработчики логов
+MY_LOGGER.add(sink=sys.stdout, level='DEBUG')   # Все логи от DEBUG и выше в stdout
+MY_LOGGER.add(  # системные логи в файл
+    sink=f'{BASE_DIR}/logs/sys_log.log',
+    level='DEBUG',
+    rotation='10 MB',
+    compression="zip",
+    enqueue=True,
+    backtrace=True,
+    diagnose=True
+)
