@@ -12,6 +12,7 @@ class Command(BaseCommand):
         default_settings = (
             ('time_to_delete', 60*36),  # Время до удаления файлов, после скачивания клиентом
             ('admin_time_to_del', 120),    # Время до удаления файлов, после действия админа
+            ('download_domain', 'downloadaccs.site'),    # Домен для скачивания файлов
         )
         for i_key, i_val in default_settings:
             setting_obj, created = ProjectSettings.objects.update_or_create(

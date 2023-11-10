@@ -12,6 +12,7 @@ import hashlib
 from django.urls import reverse
 
 from manage_groha_store.settings import DOMAIN_NAME
+from manage_store.utils import extract_domain
 
 
 class Category(models.Model):
@@ -67,7 +68,8 @@ class ProductFiles(models.Model):
             self.file_hash = md5_hash
 
         if not self.download_link:  # Если ссылка на скачивание не указана
-            self.download_link = f'{DOMAIN_NAME}{reverse("manage_store:dwnld", args=[self.file_hash])}'
+            domain_name = ProjectSettings.objects.get(key='download_domain').value
+            self.download_link = f'{domain_name}{reverse("manage_store:dwnld", args=[self.file_hash])}'
         super().save(*args, **kwargs)
 
     class Meta:
@@ -96,3 +98,17 @@ class ProjectSettings(models.Model):
         verbose_name = 'настройка'
         verbose_name_plural = 'настройки'
         ordering = ['-id']
+
+    def save(self, *args, **kwargs):
+        """
+        Переопределяем метод save для дополнения логики, которая выполняется при сохранении записи в БД.
+        """
+        # Изменяем домен в ссылках на скачивание
+        if self.key == 'download_domain':
+            files = ProductFiles.objects.all().only('download_link')
+            for i_file in files:
+                old_domain = extract_domain(url=i_file.download_link)
+                i_file.download_link = i_file.download_link.replace(old_domain, self.value)
+                i_file.save()
+        super().save(*args, **kwargs)
+

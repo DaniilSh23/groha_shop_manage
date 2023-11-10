@@ -7,7 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 from loguru import logger
 
-from django.http import FileResponse, HttpResponse
+from django.http import FileResponse, HttpResponse, HttpRequest
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 
@@ -21,7 +21,7 @@ class DownloadProductFileView(View):
     Вьюшка для скачивания файла - цифрового товара.
     """
 
-    def get(self, request, file_hash, format=None):
+    def get(self, request: HttpRequest, file_hash, format=None):
         """
         Скачивание файла.
         """
