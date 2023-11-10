@@ -12,7 +12,7 @@ import hashlib
 from django.urls import reverse
 
 from manage_groha_store.settings import DOMAIN_NAME
-from manage_store.utils import extract_domain
+from manage_store.utils import extract_domain, update_file_with_links_list
 
 
 class Category(models.Model):
@@ -105,10 +105,14 @@ class ProjectSettings(models.Model):
         """
         # Изменяем домен в ссылках на скачивание
         if self.key == 'download_domain':
-            files = ProductFiles.objects.all().only('download_link')
+            files = ProductFiles.objects.all().only('download_link', 'is_links_list', 'file')
             for i_file in files:
                 old_domain = extract_domain(url=i_file.download_link)
                 i_file.download_link = i_file.download_link.replace(old_domain, self.value)
                 i_file.save()
+
+                # Если итерируемый файл является список ссылок
+                if i_file.is_links_list:
+                    update_file_with_links_list(file_path=i_file.file.path, new_domain=self.value)
         super().save(*args, **kwargs)
 
