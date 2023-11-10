@@ -202,8 +202,10 @@ class ProjectSettingsAdmin(admin.ModelAdmin):
     list_display = [
         'id',
         'key',
+        'value',
     ]
     list_display_links = [
         'id',
         'key',
+        'value',
     ]
